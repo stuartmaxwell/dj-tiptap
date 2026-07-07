@@ -1,0 +1,40 @@
+{% comment %}
+Fragment loaded into the editor's media-library <dialog> — no {% extends %}.
+All interaction is <button> elements handled by one delegated click listener in attachments.js;
+buttons (never <a href>, so the surrounding edit form can't be navigated away) declare their meaning with data attributes:
+  data-image-url / data-image-alt — insert this image and close the dialog
+  data-fetch                      — query string to append to the browse URL
+                                    and load (the JS knows nothing about
+                                    pagination schemes)
+  data-close                      — dismiss the dialog
+Thumbnails are CSS-scaled originals for now; if that gets heavy, generate a thumbnail on upload and swap the <img> src here.
+{% endcomment %}
+<div class="dj-tiptap-browser-head">
+  <h2>Media library</h2>
+  <button type="button" data-close aria-label="Close">&times;</button>
+</div>
+{% if page.object_list %}
+  <div class="dj-tiptap-browser-grid">
+    {% for attachment in page %}
+      <button
+        type="button"
+        data-image-url="{{ attachment.file.url }}"
+        data-image-alt="{{ attachment.alt_text }}"
+        title="{{ attachment.original_filename }}"
+      >
+        <img src="{{ attachment.file.url }}" alt="{{ attachment.alt_text }}" loading="lazy">
+      </button>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="dj-tiptap-browser-empty">No images yet. Upload one with the toolbar button.</p>
+{% endif %}
+<div class="dj-tiptap-browser-nav">
+  {% if page.has_previous %}
+    <button type="button" data-fetch="?page={{ page.previous_page_number }}">&larr; Newer</button>
+  {% endif %}
+  <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}
+    <button type="button" data-fetch="?page={{ page.next_page_number }}">Older &rarr;</button>
+  {% endif %}
+</div>

@@ -1,0 +1,13 @@
+{% extends "website/base.html" %}
+{% block title %}
+  {% if post %}Edit Post &ldquo;{{ post.title }}&rdquo;{% else %}Add New Post{% endif %}
+{% endblock %}
+{% block content %}
+  <h1>{% if post %}Edit Post{% else %}Add New Post{% endif %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_div }}
+    <input type="submit" value="Save">
+  </form>
+{% endblock content %}

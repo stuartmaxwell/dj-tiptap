@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block content %}
+  {% if post %}
+    <link rel="stylesheet" href="{% static 'dj-tiptap/content.css' %}">
+    <script src="{% static 'dj-tiptap/content.bundle.js' %}" defer></script>
+    <h1>{{ post.title }}</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px">
+      <div>
+        <div class="post-content">{{ post.content | safe }}</div>
+      </div>
+      <div style="font-family: monospace; background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc">
+        {{ post.content }}
+      </div>
+    </div>
+    <p><a href="{% url 'website:post_edit' post.pk %}">edit</a></p>
+  {% endif %}
+{% endblock %}
