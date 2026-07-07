@@ -1,0 +1,87 @@
+/* The content contract: typographic rules applied identically inside the
+   editor (.tiptap) and to rendered posts on public pages (.post-content),
+   so the structure authors see is the structure readers get.
+
+   Editor-only chrome (focus ring, placeholder, selection overlays, resize
+   handles) does NOT belong here — that lives in editor.css. Page- or
+   theme-specific looks (fonts, colors of the site) stay with the site. */
+
+:is(.tiptap, .post-content) > :first-child {
+  margin-top: 0;
+}
+:is(.tiptap, .post-content) > :last-child {
+  margin-bottom: 0;
+}
+:is(.tiptap, .post-content) p {
+  margin: 0.5rem 0;
+}
+:is(.tiptap, .post-content) h1,
+:is(.tiptap, .post-content) h2,
+:is(.tiptap, .post-content) h3 {
+  margin: 1rem 0 0.5rem;
+  line-height: 1.25;
+}
+:is(.tiptap, .post-content) h1 {
+  font-size: 1.6em;
+}
+:is(.tiptap, .post-content) h2 {
+  font-size: 1.35em;
+}
+:is(.tiptap, .post-content) h3 {
+  font-size: 1.15em;
+}
+:is(.tiptap, .post-content) a {
+  color: #0969da;
+}
+:is(.tiptap, .post-content) blockquote {
+  margin: 0.75rem 0;
+  padding: 0 1rem;
+  border-left: 3px solid #d0d7de;
+  color: #59636e;
+}
+:is(.tiptap, .post-content) hr {
+  margin: 1.25rem 0;
+  border: none;
+  border-top: 2px solid #d0d7de;
+}
+:is(.tiptap, .post-content) ul,
+:is(.tiptap, .post-content) ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+:is(.tiptap, .post-content) code {
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  background: #f0f2f4;
+  font-size: 0.9em;
+}
+:is(.tiptap, .post-content) pre {
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: #f6f8fa;
+  overflow-x: auto;
+}
+:is(.tiptap, .post-content) pre code {
+  padding: 0;
+  background: none;
+  font-size: 0.875em;
+}
+:is(.tiptap, .post-content) img {
+  max-width: 100%;
+  height: auto;
+}
+:is(.tiptap, .post-content) table {
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+:is(.tiptap, .post-content) th,
+:is(.tiptap, .post-content) td {
+  border: 1px solid #cbd0d6;
+  padding: 0.25rem 0.5rem;
+  vertical-align: top;
+}
+:is(.tiptap, .post-content) th {
+  background: #f6f8fa;
+  text-align: left;
+}

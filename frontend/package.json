@@ -1,0 +1,32 @@
+{
+  "name": "dj-tiptap",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "build-content": "vite build -c vite.content.config.js",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@tabler/icons": "^3.44.0",
+    "@tiptap/core": "^3.27.1",
+    "@tiptap/extension-code-block-lowlight": "^3.27.1",
+    "@tiptap/extension-file-handler": "^3.27.1",
+    "@tiptap/extension-image": "^3.27.1",
+    "@tiptap/extension-table": "^3.27.1",
+    "@tiptap/extension-typography": "^3.27.1",
+    "@tiptap/extensions": "^3.27.1",
+    "@tiptap/pm": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1",
+    "highlight.js": "^11.11.1",
+    "lowlight": "^3.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "playwright": "^1.61.1",
+    "prettier": "^3.9.4",
+    "vite": "^8.1.3"
+  }
+}
