@@ -1,0 +1,46 @@
+"""DJ Tiptap custom form widgets."""
+
+from django import forms
+
+from . import conf
+
+
+class DjTiptapWidget(forms.Widget):
+    """Tiptap rich-text editor rendered as a form-associated custom element.
+
+    The <dj-tiptap-editor> element registers itself as a form control via
+    ElementInternals, so it submits its HTML under the field name directly —
+    no hidden input needed.
+
+    The attachment endpoints are configurable per instance
+    (DjTiptapWidget(upload_url=..., browse_url=...)), per project
+    (DJ_TIPTAP_UPLOAD_URL / DJ_TIPTAP_BROWSE_URL settings), or fall back to
+    the built-in views. Values may be URL names or paths, like LOGIN_URL.
+    """
+
+    template_name = "dj_tiptap/widgets/dj_tiptap_editor.html"
+
+    def __init__(self, attrs=None, upload_url=None, browse_url=None):
+        """Store per-instance endpoint overrides; None means "use setting or default"."""
+        super().__init__(attrs)
+        self.upload_url = upload_url
+        self.browse_url = browse_url
+
+    def use_required_attribute(self, initial):
+        """Constraint validation is left to the server; the element doesn't render a required attribute."""
+        return False
+
+    def get_context(self, name, value, attrs):
+        """Expose the attachment endpoint URLs to the editor JS as data attributes."""
+        context = super().get_context(name, value, attrs)
+        # Resolved at render time, so the URLconf is fully loaded by then
+        context["widget"]["upload_url"] = conf.upload_url(self.upload_url)
+        context["widget"]["browse_url"] = conf.browse_url(self.browse_url)
+        # Comma-separated mime types for the JS file picker and drag-drop
+        # filter, so the accepted types are defined only in conf.py
+        context["widget"]["accept"] = ",".join(conf.allowed_image_types().values())
+        return context
+
+    class Media:
+        js = ["dj_tiptap/djtiptap.bundle.js"]
+        css = {"all": ["dj_tiptap/djtiptap.css"]}
