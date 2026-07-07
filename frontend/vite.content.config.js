@@ -6,7 +6,7 @@ import { resolve } from "path";
 // don't ship the whole editor. Run via `pnpm build` (see package.json).
 export default defineConfig({
   build: {
-    outDir: resolve(__dirname, "../src/dj_tiptap/static/dj-tiptap"),
+    outDir: resolve(__dirname, "../src/dj_tiptap/static/dj_tiptap"),
     // The editor build owns cleaning this directory and runs first
     emptyOutDir: false,
     lib: {
@@ -16,6 +16,12 @@ export default defineConfig({
       fileName: () => "content.bundle.js",
       cssFileName: "content",
     },
-    sourcemap: true,
+    minify: "oxc",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        minify: true,
+      },
+    },
   },
 });

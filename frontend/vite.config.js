@@ -4,7 +4,7 @@ import { resolve } from "path";
 export default defineConfig({
   build: {
     // Compile directly into the Django static directory
-    outDir: resolve(__dirname, "../src/dj_tiptap/static/dj-tiptap"),
+    outDir: resolve(__dirname, "../src/dj_tiptap/static/dj_tiptap"),
     // Clear out the target folder before building fresh assets
     emptyOutDir: true,
     // Build as a standalone library configuration
@@ -17,7 +17,17 @@ export default defineConfig({
       fileName: () => "djtiptap.bundle.js",
       cssFileName: "djtiptap",
     },
-    // Source maps assist in debugging modular JS files in browser tools
-    sourcemap: true,
+    // Minify the shipped bundle; Vite leaves this off by default for lib builds
+    minify: "oxc",
+    // No source maps in the published package - see note in README/CLAUDE.md
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        // For ES-format lib builds, Vite's oxc minifier only mangles names and
+        // skips whitespace collapsing (it assumes a downstream bundler will
+        // finish the job). We ship this bundle as-is, so force full minification.
+        minify: true,
+      },
+    },
   },
 });
