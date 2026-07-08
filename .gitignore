@@ -141,3 +141,4 @@ cython_debug/
 # Example project
 example/staticfiles
 example/media
+example/*.sqlite3
