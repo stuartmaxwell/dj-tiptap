@@ -113,7 +113,20 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
+# The path that the static files will be served from
+STATIC_URL = "/static/"
+# The directory that collectstatic will collect static files to
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# The directory that static files will be collected from
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
-STATIC_URL = "static/"
+
+# Media files (user uploads)
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+"""DJ Tiptap configuration."""
+DJ_TIPTAP_UPLOAD_URL = "website:attachment_upload"
+DJ_TIPTAP_BROWSE_URL = "website:attachment_browse"
