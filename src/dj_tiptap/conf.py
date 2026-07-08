@@ -22,6 +22,8 @@ DEFAULT_ALLOWED_IMAGE_TYPES = {
     "WEBP": "image/webp",
 }
 
+DEFAULT_MAX_UPLOAD_SIZE_MB = 10
+
 
 def max_upload_size_mb() -> int:
     """Maximum attachment upload size in megabytes.
@@ -29,7 +31,7 @@ def max_upload_size_mb() -> int:
     Returns:
         The maximum upload size in megabytes, as configured via DJ_TIPTAP_MAX_UPLOAD_SIZE_MB.
     """
-    return getattr(settings, "DJ_TIPTAP_MAX_UPLOAD_SIZE_MB", 10)
+    return getattr(settings, "DJ_TIPTAP_MAX_UPLOAD_SIZE_MB", DEFAULT_MAX_UPLOAD_SIZE_MB)
 
 
 def allowed_image_types() -> dict[str, str]:
