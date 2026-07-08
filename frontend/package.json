@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
-    "build-content": "vite build -c vite.content.config.js",
-    "test": "playwright test"
+    "build-content": "vite build -c vite.content.config.js"
   },
   "dependencies": {
     "@tabler/icons": "^3.44.0",
@@ -24,8 +23,6 @@
     "lowlight": "^3.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
-    "playwright": "^1.61.1",
     "prettier": "^3.9.4",
     "vite": "^8.1.3"
   }

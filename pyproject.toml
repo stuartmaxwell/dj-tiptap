@@ -16,6 +16,7 @@ dev = [
     "playwright~=1.61",
     "pytest-django~=4.12",
     "pillow~=12.3",
+    "pytest-playwright>=0.8.0",
 ]
 
 [build-system]
@@ -29,6 +30,9 @@ distribution = true
 pythonpath = ". example"
 DJANGO_SETTINGS_MODULE = "config.settings_testing"
 python_files = "tests.py test_*.py *_tests.py"
+markers = [
+    "e2e: browser tests driving the live server (deselect with -m 'not e2e')",
+]
 
 [tool.djangofmt]
 line-length = 240

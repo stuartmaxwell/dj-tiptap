@@ -1,14 +1,3 @@
-{% comment %}
-Fragment loaded into the editor's media-library <dialog> — no {% extends %}.
-All interaction is <button> elements handled by one delegated click listener in attachments.js;
-buttons (never <a href>, so the surrounding edit form can't be navigated away) declare their meaning with data attributes:
-  data-image-url / data-image-alt — insert this image and close the dialog
-  data-fetch                      — query string to append to the browse URL
-                                    and load (the JS knows nothing about
-                                    pagination schemes)
-  data-close                      — dismiss the dialog
-Thumbnails are CSS-scaled originals for now; if that gets heavy, generate a thumbnail on upload and swap the <img> src here.
-{% endcomment %}
 <div class="dj-tiptap-browser-head">
   <h2>Media library</h2>
   <button type="button" data-close aria-label="Close">&times;</button>

@@ -42,9 +42,13 @@ check:
 manage *ARGS:
     pdm run example/manage.py {{ARGS}}
 
-# Run pytest (spins up Postgres test DB in Docker automatically)
+# Run the full test suite, including the Playwright browser tests
 test *ARGS:
     pdm run pytest {{ARGS}}
+
+# Run only the fast Python tests (skips the Playwright browser tests)
+test-fast *ARGS:
+    pdm run pytest -m "not e2e" {{ARGS}}
 
 # Install pre-commit hooks
 pc-install:
