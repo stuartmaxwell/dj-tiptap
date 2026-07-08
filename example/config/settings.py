@@ -117,10 +117,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 # The directory that collectstatic will collect static files to
 STATIC_ROOT = BASE_DIR / "staticfiles"
-# The directory that static files will be collected from
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
 
 # Media files (user uploads)
