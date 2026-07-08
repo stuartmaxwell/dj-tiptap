@@ -44,32 +44,38 @@ def allowed_image_types() -> dict[str, str]:
 def upload_url(override: str | None = None) -> str:
     """URL of the attachment upload endpoint.
 
-    Priority: explicit widget argument, DJ_TIPTAP_UPLOAD_URL setting, the
-    built-in view. Values may be a URL name or a path (LOGIN_URL semantics);
-    a replacement view just has to keep the JSON contract:
+    Priority: explicit widget argument, then DJ_TIPTAP_UPLOAD_URL setting.
+    Values may be a URL name or a path (LOGIN_URL semantics); the view just
+    has to keep the JSON contract:
     POST multipart {file} -> 201 {url, alt?, ...} or 4xx {error}.
+
+    When neither is set (or set to None/empty), returns "" and the widget
+    disables uploads.
 
     Args:
         override: Optional URL override for the upload endpoint.
 
     Returns:
-        The upload URL, as configured via DJ_TIPTAP_UPLOAD_URL or the default view.
+        The upload URL, as configured via DJ_TIPTAP_UPLOAD_URL, or "" if unset.
     """
-    return resolve_url(override or getattr(settings, "DJ_TIPTAP_UPLOAD_URL", ""))
+    url = override or getattr(settings, "DJ_TIPTAP_UPLOAD_URL", None)
+    return resolve_url(url) if url else ""
 
 
 def browse_url(override: str | None = None) -> str:
     """URL of the media-library browse endpoint.
 
-    Same priority and name-or-path semantics as upload_url. A replacement
-    view returns an HTML fragment honouring the picker's data attributes:
-    data-image-url/data-image-alt (insert), data-fetch (load another page),
-    data-close (dismiss).
+    Same priority and name-or-path semantics as upload_url, and likewise
+    returns "" (feature disabled) when unset. The view returns an HTML
+    fragment honouring the picker's data attributes: data-image-url /
+    data-image-alt (insert), data-fetch (load another page), data-close
+    (dismiss).
 
     Args:
         override: Optional URL override for the browse endpoint.
 
     Returns:
-        The browse URL, as configured via DJ_TIPTAP_BROWSE_URL or the default view.
+        The browse URL, as configured via DJ_TIPTAP_BROWSE_URL, or "" if unset.
     """
-    return resolve_url(override or getattr(settings, "DJ_TIPTAP_BROWSE_URL", ""))
+    url = override or getattr(settings, "DJ_TIPTAP_BROWSE_URL", None)
+    return resolve_url(url) if url else ""
