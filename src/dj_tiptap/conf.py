@@ -55,7 +55,7 @@ def upload_url(override: str | None = None) -> str:
     Returns:
         The upload URL, as configured via DJ_TIPTAP_UPLOAD_URL or the default view.
     """
-    return resolve_url(override or getattr(settings, "DJ_TIPTAP_UPLOAD_URL", "website:attachment_upload"))
+    return resolve_url(override or getattr(settings, "DJ_TIPTAP_UPLOAD_URL", ""))
 
 
 def browse_url(override: str | None = None) -> str:
@@ -72,4 +72,4 @@ def browse_url(override: str | None = None) -> str:
     Returns:
         The browse URL, as configured via DJ_TIPTAP_BROWSE_URL or the default view.
     """
-    return resolve_url(override or getattr(settings, "DJ_TIPTAP_BROWSE_URL", "website:attachment_browse"))
+    return resolve_url(override or getattr(settings, "DJ_TIPTAP_BROWSE_URL", ""))
