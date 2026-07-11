@@ -10,6 +10,26 @@ lock:
 sync:
   pdm sync --clean
 
+# Install frontend JS dependencies
+frontend-install:
+    cd frontend && pnpm install
+
+# Build the frontend JS/CSS bundles into the Django static directory
+frontend-build:
+    cd frontend && pnpm run build && pnpm run build-content
+
+# Install Playwright browser binaries needed for the e2e tests
+playwright-install:
+    pdm run playwright install
+
+# One-time setup for a fresh clone: installs Python + JS deps, builds the frontend
+# assets, installs Playwright browsers, and applies migrations.
+# Prerequisites (not installed by this recipe):
+#   - just, pdm, and pnpm must already be installed and on PATH
+#   - node must be on PATH too - a standalone pnpm install doesn't expose one,
+#     so run `pnpm env use --global lts` first if `node --version` fails
+bootstrap: sync frontend-install frontend-build playwright-install migrate
+
 # Run the Django development server
 run:
     pdm run example/manage.py runserver
