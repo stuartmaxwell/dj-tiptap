@@ -1,6 +1,6 @@
 [project]
 name = "dj-tiptap"
-version = "0.1.5"
+version = "0.1.6"
 description = "Rich text editor for Django based on Tiptap."
 authors = [
     {name = "Stuart Maxwell", email = "stuart@amanzi.nz"},
