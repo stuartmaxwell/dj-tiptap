@@ -409,7 +409,7 @@ def test_editor_and_public_page_compute_identical_content_typography(page):
             document
                 .querySelector("dj-tiptap-editor")
                 .editor.commands.setContent("<blockquote><p>Wisdom</p></blockquote><p>Inline <code>chip</code> text</p>");
-        }"""
+        }"""  # noqa: E501
     )
     # setContent doesn't count as an update; one real keystroke syncs the form value
     page.locator("dj-tiptap-editor .tiptap").click()
@@ -470,3 +470,45 @@ def test_form_submits_the_editors_html_and_round_trips_it(page):
     page.click(f"text={title}")
     expect(page.locator("h1")).to_have_text(title)
     expect(page.get_by_text("Round trip works").first).to_be_visible()
+
+
+def test_read_more_button_inserts_a_marker_node(page):
+    page.goto("/add/")
+
+    page.locator("dj-tiptap-editor .tiptap").click()
+    page.keyboard.type("Intro")
+    page.get_by_role("button", name="ReadMore", exact=True).click()
+    page.keyboard.type("Rest of the post")
+
+    # In-editor it's a real (non-editable) node, not a raw HTML comment —
+    # ProseMirror's DOM parser drops comment nodes, so a literal <!--more-->
+    # couldn't survive being loaded back in. See more.js for the full story.
+    expect(page.locator('.tiptap div[data-type="more"]')).to_have_text("Read more")
+    assert editor_html(page) == (
+        '<p>Intro</p><div data-type="more">Read more</div><p>Rest of the post</p>'
+    )
+
+
+def test_read_more_marker_round_trips_as_a_real_html_comment(page):
+    title = f"pw-test more {time.time_ns()}"
+
+    page.goto("/add/")
+    page.fill("input[name=title]", title)
+    page.locator("dj-tiptap-editor .tiptap").click()
+    page.keyboard.type("Intro")
+    page.get_by_role("button", name="ReadMore", exact=True).click()
+    page.keyboard.type("Rest of the post")
+
+    page.click("input[type=submit]")
+    page.wait_for_url("/")
+    page.click(f"text={title}")
+
+    # The example page's raw echo (unescaped Django auto-escaping, so this
+    # renders as literal visible text) proves the *stored* value is the real
+    # `<!--more-->` comment DJ Press looks for, not the editor's sentinel node.
+    expect(page.locator("div[style*='monospace']")).to_contain_text("<!--more-->")
+
+    # Reopening the form restores the marker as an editable node again
+    page.click("text=edit")
+    expect(page.locator('.tiptap div[data-type="more"]')).to_have_text("Read more")
+    assert "<!--more-->" not in editor_html(page)

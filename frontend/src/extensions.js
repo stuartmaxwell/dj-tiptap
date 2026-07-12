@@ -7,6 +7,7 @@ import Image from "@tiptap/extension-image";
 import { TableKit } from "@tiptap/extension-table";
 import { Placeholder } from "@tiptap/extensions";
 import { Typography } from "@tiptap/extension-typography";
+import { More } from "./more.js";
 
 // The `common` set is ~37 mainstream languages; `all` (~190) triples the
 // bundle. Individual grammars can also be registered one by one if even
@@ -52,4 +53,7 @@ export const extensions = [
   // (c) → ©, -> → →, 1/2 → ½, etc. Each rule can be disabled or overridden
   // via configure (e.g. { emDash: false }).
   Typography,
+  // DJ Press's "Read more" excerpt marker — see more.js for why this can't
+  // just be a raw `<!--more-->` comment inside the schema.
+  More,
 ];

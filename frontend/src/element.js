@@ -9,6 +9,27 @@ import { Editor } from "@tiptap/core";
 import { extensions } from "./extensions.js";
 import { initToolbar } from "./toolbar.js";
 import { createFileHandler } from "./attachments.js";
+import { MORE_TAG, MORE_ATTR, MORE_VALUE } from "./more.js";
+
+// `<!--more-->` is invisible to the editor's schema (see more.js), so it's
+// swapped for the `more` node's sentinel element on the way in, and back
+// again on the way out — the DB and DJ Press only ever see the real comment.
+const MORE_COMMENT = "<!--more-->";
+const MORE_ELEMENT_RE = new RegExp(
+  `<${MORE_TAG} ${MORE_ATTR}="${MORE_VALUE}"[^>]*>.*?</${MORE_TAG}>`,
+  "g",
+);
+
+function toEditorHTML(html) {
+  return html.replaceAll(
+    MORE_COMMENT,
+    `<${MORE_TAG} ${MORE_ATTR}="${MORE_VALUE}"></${MORE_TAG}>`,
+  );
+}
+
+function fromEditorHTML(html) {
+  return html.replace(MORE_ELEMENT_RE, MORE_COMMENT);
+}
 
 export default class DjTiptapEditor extends HTMLElement {
   static formAssociated = true;
@@ -48,7 +69,7 @@ export default class DjTiptapEditor extends HTMLElement {
 
   // Called by the browser when the surrounding form is reset.
   formResetCallback() {
-    this.#editor?.commands.setContent(this.#initialContent);
+    this.#editor?.commands.setContent(toEditorHTML(this.#initialContent));
     this.#syncFormValue();
   }
 
@@ -90,7 +111,7 @@ export default class DjTiptapEditor extends HTMLElement {
         ? [...extensions, createFileHandler(config)]
         : extensions,
 
-      content: this.#initialContent,
+      content: toEditorHTML(this.#initialContent),
       onCreate: () => this.#syncFormValue(),
       onUpdate: () => this.#syncFormValue(),
     });
@@ -104,6 +125,6 @@ export default class DjTiptapEditor extends HTMLElement {
   }
 
   #syncFormValue() {
-    this.#internals.setFormValue(this.#editor.getHTML());
+    this.#internals.setFormValue(fromEditorHTML(this.#editor.getHTML()));
   }
 }

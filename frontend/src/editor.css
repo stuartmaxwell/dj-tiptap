@@ -150,6 +150,26 @@ dj-tiptap-editor {
   cursor: nwse-resize;
 }
 
+/* ---- "Read more" marker (DJ Press's `<!--more-->` split point) --------- */
+
+.tiptap div[data-type="more"] {
+  position: relative;
+  margin: 1rem 0;
+  padding: 0.125rem 0;
+  border-top: 1px dashed #9aa3ad;
+  color: #57606a;
+  font-size: 0.75rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: default;
+  user-select: none;
+}
+.tiptap div[data-type="more"].ProseMirror-selectednode {
+  border-color: #4a90d9;
+  color: #0b57d0;
+}
+
 /* ---- Media-library browser dialog -------------------------------------- */
 
 dialog.dj-tiptap-browser {

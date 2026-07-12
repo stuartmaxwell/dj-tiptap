@@ -1,3 +1,4 @@
+"""Pytest configuration for the dj-tiptap project."""
 def pytest_collection_modifyitems(items):
     """Run the fast Python tests before the e2e browser tests.
 

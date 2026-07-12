@@ -22,6 +22,7 @@ import imageUpload from "@tabler/icons/outline/photo-up.svg?raw";
 import imageLibrary from "@tabler/icons/outline/library-photo.svg?raw";
 import table from "@tabler/icons/outline/table.svg?raw";
 import horizontalRule from "@tabler/icons/outline/minus.svg?raw";
+import readMore from "@tabler/icons/outline/page-break.svg?raw";
 import hardBreak from "@tabler/icons/outline/corner-down-left.svg?raw";
 import addRowBefore from "@tabler/icons/outline/row-insert-top.svg?raw";
 import addRowAfter from "@tabler/icons/outline/row-insert-bottom.svg?raw";
@@ -61,6 +62,7 @@ export default {
   "image-library": fromSvg(imageLibrary),
   "insert-table": fromSvg(table),
   hr: fromSvg(horizontalRule),
+  more: fromSvg(readMore),
   "hard-break": fromSvg(hardBreak),
   "add-row-before": fromSvg(addRowBefore),
   "add-row-after": fromSvg(addRowAfter),
