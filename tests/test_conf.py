@@ -32,6 +32,26 @@ class TestAllowedImageTypes:
         assert conf.allowed_image_types() == {"PNG": "image/png"}
 
 
+class TestMaxVideoUploadSizeMb:
+    def test_default(self, settings):
+        del settings.DJ_TIPTAP_MAX_VIDEO_UPLOAD_SIZE_MB
+        assert conf.max_video_upload_size_mb() == 100
+
+    def test_configured(self, settings):
+        settings.DJ_TIPTAP_MAX_VIDEO_UPLOAD_SIZE_MB = 500
+        assert conf.max_video_upload_size_mb() == 500
+
+
+class TestAllowedVideoTypes:
+    def test_default(self, settings):
+        del settings.DJ_TIPTAP_ALLOWED_VIDEO_TYPES
+        assert conf.allowed_video_types() == conf.DEFAULT_ALLOWED_VIDEO_TYPES
+
+    def test_configured(self, settings):
+        settings.DJ_TIPTAP_ALLOWED_VIDEO_TYPES = {"video/mp4"}
+        assert conf.allowed_video_types() == {"video/mp4"}
+
+
 class TestUploadUrl:
     def test_url_name_is_resolved(self, settings):
         settings.DJ_TIPTAP_UPLOAD_URL = "website:attachment_upload"

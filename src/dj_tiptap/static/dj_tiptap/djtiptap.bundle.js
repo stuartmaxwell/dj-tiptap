@@ -156,7 +156,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
 `,f=Array.from({length:a}).map((e,t)=>l&&c[t]&&c[t].text||``);return d+=`| ${f.map((e,t)=>s(e,o[t])).join(` | `)} |
 `,d+=`| ${o.map((e,t)=>{let n=Math.max(3,e),r=u[t];return r===`left`?`:${`-`.repeat(n)}`:r===`right`?`${`-`.repeat(n)}:`:r===`center`?`:${`-`.repeat(n)}:`:`-`.repeat(n)}).join(` | `)} |
 `,(l?i.slice(1):i).forEach(e=>{d+=`| ${Array.from({length:a}).fill(0).map((t,n)=>s(e[n]&&e[n].text||``,o[n])).join(` | `)} |
-`}),d}var US=HS,WS=W.create({name:`table`,addOptions(){return{HTMLAttributes:{},resizable:!1,renderWrapper:!1,handleWidth:5,cellMinWidth:25,View:PS,lastColumnResizable:!0,allowTableNodeSelection:!1}},content:`tableRow+`,tableRole:`table`,isolating:!0,group:`block`,parseHTML(){return[{tag:`table`}]},renderHTML({node:e,HTMLAttributes:t}){let{colgroup:n,tableWidth:r,tableMinWidth:i}=FS(e,this.options.cellMinWidth),a=t.style;function o(){return a||(r?`width: ${r}`:`min-width: ${i}`)}let s=[`table`,V(this.options.HTMLAttributes,t,{style:o()}),n,[`tbody`,0]];return this.options.renderWrapper?[`div`,{class:`tableWrapper`},s]:s},parseMarkdown:(e,t)=>{let n=[],r=Array.isArray(e.align)?e.align:[];if(e.header){let i=[];e.header.forEach((e,n)=>{let a=TS(r[n]??e.align),o=a?{align:a}:{};i.push(t.createNode(`tableHeader`,o,[{type:`paragraph`,content:t.parseInline(e.tokens)}]))}),n.push(t.createNode(`tableRow`,{},i))}return e.rows&&e.rows.forEach(e=>{let i=[];e.forEach((e,n)=>{let a=TS(r[n]??e.align),o=a?{align:a}:{};i.push(t.createNode(`tableCell`,o,[{type:`paragraph`,content:t.parseInline(e.tokens)}]))}),n.push(t.createNode(`tableRow`,{},i))}),t.createNode(`table`,void 0,n)},renderMarkdown:(e,t)=>US(e,t),addCommands(){return{insertTable:({rows:e=3,cols:t=3,withHeaderRow:n=!0}={})=>({tr:r,dispatch:i,editor:a})=>{let o=RS(a.schema,e,t,n);if(i){let e=r.selection.from+1;r.replaceSelectionWith(o).scrollIntoView().setSelection(N.near(r.doc.resolve(e)))}return!0},addColumnBefore:()=>({state:e,dispatch:t})=>yx(e,t),addColumnAfter:()=>({state:e,dispatch:t})=>bx(e,t),deleteColumn:()=>({state:e,dispatch:t})=>Sx(e,t),addRowBefore:()=>({state:e,dispatch:t})=>Tx(e,t),addRowAfter:()=>({state:e,dispatch:t})=>Ex(e,t),deleteRow:()=>({state:e,dispatch:t})=>Ox(e,t),deleteTable:()=>({state:e,dispatch:t})=>Vx(e,t),mergeCells:()=>({state:e,dispatch:t})=>jx(e,t),splitCell:()=>({state:e,dispatch:t})=>Mx(e,t),toggleHeaderColumn:()=>({state:e,dispatch:t})=>Lx(`column`)(e,t),toggleHeaderRow:()=>({state:e,dispatch:t})=>Lx(`row`)(e,t),toggleHeaderCell:()=>({state:e,dispatch:t})=>Rx(e,t),mergeOrSplit:()=>({state:e,dispatch:t})=>jx(e,t)?!0:Mx(e,t),setCellAttribute:(e,t)=>({state:n,dispatch:r})=>Px(e,t)(n,r),goToNextCell:()=>({state:e,dispatch:t})=>Bx(1)(e,t),goToPreviousCell:()=>({state:e,dispatch:t})=>Bx(-1)(e,t),fixTables:()=>({state:e,dispatch:t})=>(t&&hx(e),!0),setCellSelection:e=>({tr:t,dispatch:n})=>{if(n){let n=Q.create(t.doc,e.anchorCell,e.headCell);t.setSelection(n)}return!0}}},addKeyboardShortcuts(){return{Tab:()=>this.editor.commands.goToNextCell()?!0:this.editor.can().addRowAfter()?this.editor.chain().addRowAfter().goToNextCell().run():!1,"Shift-Tab":()=>this.editor.commands.goToPreviousCell(),Backspace:BS,"Mod-Backspace":BS,Delete:BS,"Mod-Delete":BS}},addProseMirrorPlugins(){return[...this.options.resizable&&this.editor.isEditable?[uS({handleWidth:this.options.handleWidth,cellMinWidth:this.options.cellMinWidth,defaultCellMinWidth:this.options.cellMinWidth,View:this.options.View,lastColumnResizable:this.options.lastColumnResizable})]:[],wS({allowTableNodeSelection:this.options.allowTableNodeSelection})]},addNodeView(){let e=this.options.resizable&&this.editor.isEditable,t=this.options.View;return e||!t?null:({node:e,view:n,HTMLAttributes:r})=>{let i=V(this.options.HTMLAttributes,r);return new t(e,this.options.cellMinWidth,n,i)}},extendNodeSchema(e){return{tableRole:B(z(e,`tableRole`,{name:e.name,options:e.options,storage:e.storage}))}}}),GS=H.create({name:`tableKit`,addExtensions(){let e=[];return this.options.table!==!1&&e.push(WS.configure(this.options.table)),this.options.tableCell!==!1&&e.push(kS.configure(this.options.tableCell)),this.options.tableHeader!==!1&&e.push(AS.configure(this.options.tableHeader)),this.options.tableRow!==!1&&e.push(jS.configure(this.options.tableRow)),e}}),KS=e=>U({find:/--$/,replace:e??`—`}),qS=e=>U({find:/\.\.\.$/,replace:e??`…`}),JS=e=>U({find:/(?:^|[\s{[(<'"\u2018\u201C])(")$/,replace:e??`“`}),YS=e=>U({find:/"$/,replace:e??`”`}),XS=e=>U({find:/(?:^|[\s{[(<'"\u2018\u201C])(')$/,replace:e??`‘`}),ZS=e=>U({find:/'$/,replace:e??`’`}),QS=e=>U({find:/<-$/,replace:e??`←`}),$S=e=>U({find:/->$/,replace:e??`→`}),eC=e=>U({find:/\(c\)$/,replace:e??`©`}),tC=e=>U({find:/\(tm\)$/,replace:e??`™`}),nC=e=>U({find:/\(sm\)$/,replace:e??`℠`}),rC=e=>U({find:/\(r\)$/,replace:e??`®`}),iC=e=>U({find:/(?:^|\s)(1\/2)\s$/,replace:e??`½`}),aC=e=>U({find:/\+\/-$/,replace:e??`±`}),oC=e=>U({find:/!=$/,replace:e??`≠`}),sC=e=>U({find:/<<$/,replace:e??`«`}),cC=e=>U({find:/>>$/,replace:e??`»`}),lC=e=>U({find:/\d+\s?([*x])\s?\d+$/,replace:e??`×`}),uC=e=>U({find:/\^2$/,replace:e??`²`}),dC=e=>U({find:/\^3$/,replace:e??`³`}),fC=e=>U({find:/(?:^|\s)(1\/4)\s$/,replace:e??`¼`}),pC=e=>U({find:/(?:^|\s)(3\/4)\s$/,replace:e??`¾`}),mC=H.create({name:`typography`,addOptions(){return{closeDoubleQuote:`”`,closeSingleQuote:`’`,copyright:`©`,ellipsis:`…`,emDash:`—`,laquo:`«`,leftArrow:`←`,multiplication:`×`,notEqual:`≠`,oneHalf:`½`,oneQuarter:`¼`,openDoubleQuote:`“`,openSingleQuote:`‘`,plusMinus:`±`,raquo:`»`,registeredTrademark:`®`,rightArrow:`→`,servicemark:`℠`,superscriptThree:`³`,superscriptTwo:`²`,threeQuarters:`¾`,trademark:`™`}},addInputRules(){let e=[];this.options.emDash!==!1&&e.push(KS(this.options.emDash)),this.options.ellipsis!==!1&&e.push(qS(this.options.ellipsis));let t=this.editor.options.textDirection===`rtl`;if(this.options.doubleQuotes?.rtl){let{open:t,close:n}=this.options.doubleQuotes.rtl;e.push(JS(t)),e.push(YS(n))}else t?(e.push(JS(`”`)),e.push(YS(`“`))):(this.options.openDoubleQuote!==!1&&e.push(JS(this.options.openDoubleQuote)),this.options.closeDoubleQuote!==!1&&e.push(YS(this.options.closeDoubleQuote)));if(this.options.singleQuotes?.rtl){let{open:t,close:n}=this.options.singleQuotes.rtl;e.push(XS(t)),e.push(ZS(n))}else t?(e.push(XS(`’`)),e.push(ZS(`‘`))):(this.options.openSingleQuote!==!1&&e.push(XS(this.options.openSingleQuote)),this.options.closeSingleQuote!==!1&&e.push(ZS(this.options.closeSingleQuote)));return this.options.leftArrow!==!1&&e.push(QS(this.options.leftArrow)),this.options.rightArrow!==!1&&e.push($S(this.options.rightArrow)),this.options.copyright!==!1&&e.push(eC(this.options.copyright)),this.options.trademark!==!1&&e.push(tC(this.options.trademark)),this.options.servicemark!==!1&&e.push(nC(this.options.servicemark)),this.options.registeredTrademark!==!1&&e.push(rC(this.options.registeredTrademark)),this.options.oneHalf!==!1&&e.push(iC(this.options.oneHalf)),this.options.plusMinus!==!1&&e.push(aC(this.options.plusMinus)),this.options.notEqual!==!1&&e.push(oC(this.options.notEqual)),this.options.laquo!==!1&&e.push(sC(this.options.laquo)),this.options.raquo!==!1&&e.push(cC(this.options.raquo)),this.options.multiplication!==!1&&e.push(lC(this.options.multiplication)),this.options.superscriptTwo!==!1&&e.push(uC(this.options.superscriptTwo)),this.options.superscriptThree!==!1&&e.push(dC(this.options.superscriptThree)),this.options.oneQuarter!==!1&&e.push(fC(this.options.oneQuarter)),this.options.threeQuarters!==!1&&e.push(pC(this.options.threeQuarters)),e}}),hC=`data-type`,gC=`more`,_C=W.create({name:`more`,group:`block`,atom:!0,selectable:!0,parseHTML(){return[{tag:`div[${hC}="${gC}"]`}]},renderHTML({HTMLAttributes:e}){return[`div`,V(e,{[hC]:gC}),`Read more`]},addCommands(){return{setMore:()=>({chain:e,state:t})=>{if(!Qu(t,t.schema.nodes[this.name]))return!1;let{selection:n}=t,{$to:r}=n,i=e();return bu(n)?i.insertContentAt(r.pos,{type:this.name}):i.insertContent({type:this.name}),i.command(({tr:e,dispatch:t})=>{if(t){let{$to:t}=e.selection,n=t.end();if(t.nodeAfter)t.nodeAfter.isTextblock?e.setSelection(N.create(e.doc,t.pos+1)):t.nodeAfter.isBlock?e.setSelection(P.create(e.doc,t.pos)):e.setSelection(N.create(e.doc,t.pos));else{let t=e.doc.type.schema.nodes.paragraph?.create();t&&(e.insert(n,t),e.setSelection(N.create(e.doc,n+1)))}e.scrollIntoView()}return!0}).run()}}}}),vC=Rb(Fb),yC=[Cv.configure({link:{openOnClick:!1},dropcursor:{width:2},codeBlock:!1}),jv.configure({lowlight:vC}),Vb.configure({resize:{enabled:!0,alwaysPreserveAspectRatio:!0,minWidth:50,minHeight:50}}),GS.configure({table:{resizable:!0}}),vv.configure({placeholder:`Write something…`}),mC,_C],bC=`<svg
+`}),d}var US=HS,WS=W.create({name:`table`,addOptions(){return{HTMLAttributes:{},resizable:!1,renderWrapper:!1,handleWidth:5,cellMinWidth:25,View:PS,lastColumnResizable:!0,allowTableNodeSelection:!1}},content:`tableRow+`,tableRole:`table`,isolating:!0,group:`block`,parseHTML(){return[{tag:`table`}]},renderHTML({node:e,HTMLAttributes:t}){let{colgroup:n,tableWidth:r,tableMinWidth:i}=FS(e,this.options.cellMinWidth),a=t.style;function o(){return a||(r?`width: ${r}`:`min-width: ${i}`)}let s=[`table`,V(this.options.HTMLAttributes,t,{style:o()}),n,[`tbody`,0]];return this.options.renderWrapper?[`div`,{class:`tableWrapper`},s]:s},parseMarkdown:(e,t)=>{let n=[],r=Array.isArray(e.align)?e.align:[];if(e.header){let i=[];e.header.forEach((e,n)=>{let a=TS(r[n]??e.align),o=a?{align:a}:{};i.push(t.createNode(`tableHeader`,o,[{type:`paragraph`,content:t.parseInline(e.tokens)}]))}),n.push(t.createNode(`tableRow`,{},i))}return e.rows&&e.rows.forEach(e=>{let i=[];e.forEach((e,n)=>{let a=TS(r[n]??e.align),o=a?{align:a}:{};i.push(t.createNode(`tableCell`,o,[{type:`paragraph`,content:t.parseInline(e.tokens)}]))}),n.push(t.createNode(`tableRow`,{},i))}),t.createNode(`table`,void 0,n)},renderMarkdown:(e,t)=>US(e,t),addCommands(){return{insertTable:({rows:e=3,cols:t=3,withHeaderRow:n=!0}={})=>({tr:r,dispatch:i,editor:a})=>{let o=RS(a.schema,e,t,n);if(i){let e=r.selection.from+1;r.replaceSelectionWith(o).scrollIntoView().setSelection(N.near(r.doc.resolve(e)))}return!0},addColumnBefore:()=>({state:e,dispatch:t})=>yx(e,t),addColumnAfter:()=>({state:e,dispatch:t})=>bx(e,t),deleteColumn:()=>({state:e,dispatch:t})=>Sx(e,t),addRowBefore:()=>({state:e,dispatch:t})=>Tx(e,t),addRowAfter:()=>({state:e,dispatch:t})=>Ex(e,t),deleteRow:()=>({state:e,dispatch:t})=>Ox(e,t),deleteTable:()=>({state:e,dispatch:t})=>Vx(e,t),mergeCells:()=>({state:e,dispatch:t})=>jx(e,t),splitCell:()=>({state:e,dispatch:t})=>Mx(e,t),toggleHeaderColumn:()=>({state:e,dispatch:t})=>Lx(`column`)(e,t),toggleHeaderRow:()=>({state:e,dispatch:t})=>Lx(`row`)(e,t),toggleHeaderCell:()=>({state:e,dispatch:t})=>Rx(e,t),mergeOrSplit:()=>({state:e,dispatch:t})=>jx(e,t)?!0:Mx(e,t),setCellAttribute:(e,t)=>({state:n,dispatch:r})=>Px(e,t)(n,r),goToNextCell:()=>({state:e,dispatch:t})=>Bx(1)(e,t),goToPreviousCell:()=>({state:e,dispatch:t})=>Bx(-1)(e,t),fixTables:()=>({state:e,dispatch:t})=>(t&&hx(e),!0),setCellSelection:e=>({tr:t,dispatch:n})=>{if(n){let n=Q.create(t.doc,e.anchorCell,e.headCell);t.setSelection(n)}return!0}}},addKeyboardShortcuts(){return{Tab:()=>this.editor.commands.goToNextCell()?!0:this.editor.can().addRowAfter()?this.editor.chain().addRowAfter().goToNextCell().run():!1,"Shift-Tab":()=>this.editor.commands.goToPreviousCell(),Backspace:BS,"Mod-Backspace":BS,Delete:BS,"Mod-Delete":BS}},addProseMirrorPlugins(){return[...this.options.resizable&&this.editor.isEditable?[uS({handleWidth:this.options.handleWidth,cellMinWidth:this.options.cellMinWidth,defaultCellMinWidth:this.options.cellMinWidth,View:this.options.View,lastColumnResizable:this.options.lastColumnResizable})]:[],wS({allowTableNodeSelection:this.options.allowTableNodeSelection})]},addNodeView(){let e=this.options.resizable&&this.editor.isEditable,t=this.options.View;return e||!t?null:({node:e,view:n,HTMLAttributes:r})=>{let i=V(this.options.HTMLAttributes,r);return new t(e,this.options.cellMinWidth,n,i)}},extendNodeSchema(e){return{tableRole:B(z(e,`tableRole`,{name:e.name,options:e.options,storage:e.storage}))}}}),GS=H.create({name:`tableKit`,addExtensions(){let e=[];return this.options.table!==!1&&e.push(WS.configure(this.options.table)),this.options.tableCell!==!1&&e.push(kS.configure(this.options.tableCell)),this.options.tableHeader!==!1&&e.push(AS.configure(this.options.tableHeader)),this.options.tableRow!==!1&&e.push(jS.configure(this.options.tableRow)),e}}),KS=e=>U({find:/--$/,replace:e??`—`}),qS=e=>U({find:/\.\.\.$/,replace:e??`…`}),JS=e=>U({find:/(?:^|[\s{[(<'"\u2018\u201C])(")$/,replace:e??`“`}),YS=e=>U({find:/"$/,replace:e??`”`}),XS=e=>U({find:/(?:^|[\s{[(<'"\u2018\u201C])(')$/,replace:e??`‘`}),ZS=e=>U({find:/'$/,replace:e??`’`}),QS=e=>U({find:/<-$/,replace:e??`←`}),$S=e=>U({find:/->$/,replace:e??`→`}),eC=e=>U({find:/\(c\)$/,replace:e??`©`}),tC=e=>U({find:/\(tm\)$/,replace:e??`™`}),nC=e=>U({find:/\(sm\)$/,replace:e??`℠`}),rC=e=>U({find:/\(r\)$/,replace:e??`®`}),iC=e=>U({find:/(?:^|\s)(1\/2)\s$/,replace:e??`½`}),aC=e=>U({find:/\+\/-$/,replace:e??`±`}),oC=e=>U({find:/!=$/,replace:e??`≠`}),sC=e=>U({find:/<<$/,replace:e??`«`}),cC=e=>U({find:/>>$/,replace:e??`»`}),lC=e=>U({find:/\d+\s?([*x])\s?\d+$/,replace:e??`×`}),uC=e=>U({find:/\^2$/,replace:e??`²`}),dC=e=>U({find:/\^3$/,replace:e??`³`}),fC=e=>U({find:/(?:^|\s)(1\/4)\s$/,replace:e??`¼`}),pC=e=>U({find:/(?:^|\s)(3\/4)\s$/,replace:e??`¾`}),mC=H.create({name:`typography`,addOptions(){return{closeDoubleQuote:`”`,closeSingleQuote:`’`,copyright:`©`,ellipsis:`…`,emDash:`—`,laquo:`«`,leftArrow:`←`,multiplication:`×`,notEqual:`≠`,oneHalf:`½`,oneQuarter:`¼`,openDoubleQuote:`“`,openSingleQuote:`‘`,plusMinus:`±`,raquo:`»`,registeredTrademark:`®`,rightArrow:`→`,servicemark:`℠`,superscriptThree:`³`,superscriptTwo:`²`,threeQuarters:`¾`,trademark:`™`}},addInputRules(){let e=[];this.options.emDash!==!1&&e.push(KS(this.options.emDash)),this.options.ellipsis!==!1&&e.push(qS(this.options.ellipsis));let t=this.editor.options.textDirection===`rtl`;if(this.options.doubleQuotes?.rtl){let{open:t,close:n}=this.options.doubleQuotes.rtl;e.push(JS(t)),e.push(YS(n))}else t?(e.push(JS(`”`)),e.push(YS(`“`))):(this.options.openDoubleQuote!==!1&&e.push(JS(this.options.openDoubleQuote)),this.options.closeDoubleQuote!==!1&&e.push(YS(this.options.closeDoubleQuote)));if(this.options.singleQuotes?.rtl){let{open:t,close:n}=this.options.singleQuotes.rtl;e.push(XS(t)),e.push(ZS(n))}else t?(e.push(XS(`’`)),e.push(ZS(`‘`))):(this.options.openSingleQuote!==!1&&e.push(XS(this.options.openSingleQuote)),this.options.closeSingleQuote!==!1&&e.push(ZS(this.options.closeSingleQuote)));return this.options.leftArrow!==!1&&e.push(QS(this.options.leftArrow)),this.options.rightArrow!==!1&&e.push($S(this.options.rightArrow)),this.options.copyright!==!1&&e.push(eC(this.options.copyright)),this.options.trademark!==!1&&e.push(tC(this.options.trademark)),this.options.servicemark!==!1&&e.push(nC(this.options.servicemark)),this.options.registeredTrademark!==!1&&e.push(rC(this.options.registeredTrademark)),this.options.oneHalf!==!1&&e.push(iC(this.options.oneHalf)),this.options.plusMinus!==!1&&e.push(aC(this.options.plusMinus)),this.options.notEqual!==!1&&e.push(oC(this.options.notEqual)),this.options.laquo!==!1&&e.push(sC(this.options.laquo)),this.options.raquo!==!1&&e.push(cC(this.options.raquo)),this.options.multiplication!==!1&&e.push(lC(this.options.multiplication)),this.options.superscriptTwo!==!1&&e.push(uC(this.options.superscriptTwo)),this.options.superscriptThree!==!1&&e.push(dC(this.options.superscriptThree)),this.options.oneQuarter!==!1&&e.push(fC(this.options.oneQuarter)),this.options.threeQuarters!==!1&&e.push(pC(this.options.threeQuarters)),e}}),hC=`data-type`,gC=`more`,_C=W.create({name:`more`,group:`block`,atom:!0,selectable:!0,parseHTML(){return[{tag:`div[${hC}="${gC}"]`}]},renderHTML({HTMLAttributes:e}){return[`div`,V(e,{[hC]:gC}),`Read more`]},addCommands(){return{setMore:()=>({chain:e,state:t})=>{if(!Qu(t,t.schema.nodes[this.name]))return!1;let{selection:n}=t,{$to:r}=n,i=e();return bu(n)?i.insertContentAt(r.pos,{type:this.name}):i.insertContent({type:this.name}),i.command(({tr:e,dispatch:t})=>{if(t){let{$to:t}=e.selection,n=t.end();if(t.nodeAfter)t.nodeAfter.isTextblock?e.setSelection(N.create(e.doc,t.pos+1)):t.nodeAfter.isBlock?e.setSelection(P.create(e.doc,t.pos)):e.setSelection(N.create(e.doc,t.pos));else{let t=e.doc.type.schema.nodes.paragraph?.create();t&&(e.insert(n,t),e.setSelection(N.create(e.doc,n+1)))}e.scrollIntoView()}return!0}).run()}}}}),vC=W.create({name:`video`,group:`block`,atom:!0,draggable:!0,addAttributes(){return{src:{default:null},title:{default:null}}},parseHTML(){return[{tag:`video`,getAttrs:e=>({src:e.getAttribute(`src`)??e.querySelector(`source`)?.getAttribute(`src`),title:e.getAttribute(`title`)})}]},renderHTML({HTMLAttributes:e}){return[`video`,V(e,{controls:`controls`,preload:`metadata`})]},addCommands(){return{setVideo:e=>({commands:t})=>t.insertContent({type:this.name,attrs:e})}}}),yC=Rb(Fb),bC=[Cv.configure({link:{openOnClick:!1},dropcursor:{width:2},codeBlock:!1}),jv.configure({lowlight:yC}),Vb.configure({resize:{enabled:!0,alwaysPreserveAspectRatio:!0,minWidth:50,minHeight:50}}),GS.configure({table:{resizable:!0}}),vv.configure({placeholder:`Write something…`}),mC,_C,vC],xC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -171,7 +171,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M9 14l-4 -4l4 -4" />
   <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
-</svg>`,xC=`<svg
+</svg>`,SC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -186,7 +186,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M15 14l4 -4l-4 -4" />
   <path d="M19 10h-11a4 4 0 1 0 0 8h1" />
-</svg>`,SC=`<svg
+</svg>`,CC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -202,7 +202,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M13 4v16" />
   <path d="M17 4v16" />
   <path d="M19 4h-9.5a4.5 4.5 0 0 0 0 9h3.5" />
-</svg>`,CC=`<svg
+</svg>`,wC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -223,7 +223,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M4 12h8" />
   <path d="M3 6h2" />
   <path d="M11 6h2" />
-</svg>`,wC=`<svg
+</svg>`,TC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -244,7 +244,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M4 12h8" />
   <path d="M3 6h2" />
   <path d="M11 6h2" />
-</svg>`,TC=`<svg
+</svg>`,EC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -266,7 +266,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M4 12h8" />
   <path d="M3 6h2" />
   <path d="M11 6h2" />
-</svg>`,EC=`<svg
+</svg>`,DC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -281,7 +281,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6l0 -7" />
   <path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7" />
-</svg>`,DC=`<svg
+</svg>`,OC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -297,7 +297,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M11 5l6 0" />
   <path d="M7 19l6 0" />
   <path d="M14 5l-4 14" />
-</svg>`,OC=`<svg
+</svg>`,kC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -312,7 +312,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 12l14 0" />
   <path d="M16 6.5a4 2 0 0 0 -4 -1.5h-1a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-1.5a4 2 0 0 1 -4 -1.5" />
-</svg>`,kC=`<svg
+</svg>`,AC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -327,7 +327,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M7 5v5a5 5 0 0 0 10 0v-5" />
   <path d="M5 19h14" />
-</svg>`,AC=`<svg
+</svg>`,jC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -343,7 +343,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M7 8l-4 4l4 4" />
   <path d="M17 8l4 4l-4 4" />
   <path d="M14 4l-4 16" />
-</svg>`,jC=`<svg
+</svg>`,MC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -362,7 +362,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M21 7h-6" />
   <path d="M9 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
   <path d="M3 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
-</svg>`,MC=`<svg
+</svg>`,NC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -381,7 +381,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M5 6l0 .01" />
   <path d="M5 12l0 .01" />
   <path d="M5 18l0 .01" />
-</svg>`,NC=`<svg
+</svg>`,PC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -399,7 +399,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M12 18h8" />
   <path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" />
   <path d="M6 10v-6l-2 2" />
-</svg>`,PC=`<svg
+</svg>`,FC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -416,7 +416,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M12 4l2 2l-2 2" />
   <path d="M8 8l1 -4" />
   <path d="M17 6a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7" />
-</svg>`,FC=`<svg
+</svg>`,IC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -432,7 +432,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M9 15l6 -6" />
   <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" />
   <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" />
-</svg>`,IC=`<svg
+</svg>`,LC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -449,7 +449,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12" />
   <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
   <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
-</svg>`,LC=`<svg
+</svg>`,RC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -468,7 +468,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M14 14l1 -1c.679 -.653 1.473 -.829 2.214 -.526" />
   <path d="M19 22v-6" />
   <path d="M22 19l-3 -3l-3 3" />
-</svg>`,RC=`<svg
+</svg>`,zC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -486,7 +486,45 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M17 7h.01" />
   <path d="M7 13l3.644 -3.644a1.21 1.21 0 0 1 1.712 0l3.644 3.644" />
   <path d="M15 12l1.644 -1.644a1.21 1.21 0 0 1 1.712 0l2.644 2.644" />
-</svg>`,zC=`<svg
+</svg>`,BC=`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="icon icon-tabler icons-tabler-outline icon-tabler-movie"
+>
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+  <path d="M8 4l0 16" />
+  <path d="M16 4l0 16" />
+  <path d="M4 8l4 0" />
+  <path d="M4 16l4 0" />
+  <path d="M4 12l16 0" />
+  <path d="M16 8l4 0" />
+  <path d="M16 16l4 0" />
+</svg>`,VC=`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"
+>
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4" />
+  <path d="M3 8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -8" />
+  <path d="M7 12l4 0" />
+  <path d="M9 10l0 4" />
+</svg>`,HC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -502,7 +540,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" />
   <path d="M3 10h18" />
   <path d="M10 3v18" />
-</svg>`,BC=`<svg
+</svg>`,UC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -516,7 +554,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
 >
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M5 12l14 0" />
-</svg>`,VC=`<svg
+</svg>`,WC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -533,7 +571,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M19 18v1a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-1" />
   <path d="M3 14h3m4.5 0h3m4.5 0h3" />
   <path d="M5 10v-5a2 2 0 0 1 2 -2h7l5 5v2" />
-</svg>`,HC=`<svg
+</svg>`,GC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -547,7 +585,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
 >
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M18 6v6a3 3 0 0 1 -3 3h-10l4 -4m0 8l-4 -4" />
-</svg>`,UC=`<svg
+</svg>`,KC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -563,7 +601,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M4 18v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1" />
   <path d="M12 9v-4" />
   <path d="M10 7l4 0" />
-</svg>`,WC=`<svg
+</svg>`,qC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -579,7 +617,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M20 6v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1" />
   <path d="M12 15l0 4" />
   <path d="M14 17l-4 0" />
-</svg>`,GC=`<svg
+</svg>`,JC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -595,7 +633,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M20 6v4a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1" />
   <path d="M10 16l4 4" />
   <path d="M10 20l4 -4" />
-</svg>`,KC=`<svg
+</svg>`,YC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -611,7 +649,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
   <path d="M5 12l4 0" />
   <path d="M7 10l0 4" />
-</svg>`,qC=`<svg
+</svg>`,XC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -627,7 +665,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
   <path d="M15 12l4 0" />
   <path d="M17 10l0 4" />
-</svg>`,JC=`<svg
+</svg>`,ZC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -643,7 +681,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M6 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
   <path d="M16 10l4 4" />
   <path d="M16 14l4 -4" />
-</svg>`,YC=`<svg
+</svg>`,QC=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -658,7 +696,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path stroke="none" d="M0 0h24v24H0z" fill="none" />
   <path d="M3 4a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-16" />
   <path d="M12 3v18" />
-</svg>`,XC=`<svg
+</svg>`,$C=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -678,7 +716,7 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M21 6l-4 4" />
   <path d="M3 10h18" />
   <path d="M10 10v11" />
-</svg>`,ZC=`<svg
+</svg>`,ew=`<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
@@ -695,4 +733,4 @@ https://github.com/highlightjs/highlight.js/issues/2277`),i=e,r=t),n===void 0&&(
   <path d="M3 10h18" />
   <path d="M10 3v18" />
   <path d="M16 19h6" />
-</svg>`,$=e=>()=>{let t=document.createElement(`template`);return t.innerHTML=e.trim(),t.content.firstElementChild},QC={undo:$(bC),redo:$(xC),paragraph:$(SC),"heading-1":$(CC),"heading-2":$(wC),"heading-3":$(TC),bold:$(EC),italic:$(DC),strikethrough:$(OC),underline:$(kC),code:$(AC),blockquote:$(jC),"bullet-list":$(MC),"ordered-list":$(NC),"code-block":$(PC),link:$(FC),image:$(IC),"image-upload":$(LC),"image-library":$(RC),"insert-table":$(zC),hr:$(BC),more:$(VC),"hard-break":$(HC),"add-row-before":$(UC),"add-row-after":$(WC),"delete-row":$(GC),"add-col-before":$(KC),"add-col-after":$(qC),"delete-col":$(JC),"merge-or-split":$(YC),"header-row":$(XC),"delete-table":$(ZC)},$C=({key:e,editor:t,onPaste:n,onDrop:r,allowedMimeTypes:i})=>new F({key:e||new I(`fileHandler`),props:{handleDrop(e,n){if(!r||n.dataTransfer?.types.includes(`application/x-prosemirror-slice`)||!n.dataTransfer?.files.length)return!1;let a=e.posAtCoords({left:n.clientX,top:n.clientY}),o=Array.from(n.dataTransfer.files);return i&&(o=o.filter(e=>i.includes(e.type))),o.length===0?!1:(n.preventDefault(),n.stopPropagation(),r(t,o,a?.pos||0),!0)},handlePaste(e,r){if(!n||!r.clipboardData?.files.length)return!1;let a=Array.from(r.clipboardData.files),o=r.clipboardData.getData(`text/html`);return i&&(a=a.filter(e=>i.includes(e.type))),!(a.length===0||(r.preventDefault(),r.stopPropagation(),n(t,a,o),o.length>0))}}}),ew=H.create({name:`fileHandler`,addOptions(){return{onPaste:void 0,onDrop:void 0,allowedMimeTypes:void 0}},addProseMirrorPlugins(){return[$C({key:new I(this.name),editor:this.editor,allowedMimeTypes:this.options.allowedMimeTypes,onDrop:this.options.onDrop,onPaste:this.options.onPaste})]}});async function tw(e,t){let n=new FormData;n.append(`file`,e);let r=await fetch(t.uploadUrl,{method:`POST`,headers:{"X-CSRFToken":t.csrfToken()},body:n}),i=await r.json();if(!r.ok)throw Error(i.error);return i}function nw(e,t){let n=document.createElement(`input`);n.type=`file`,n.accept=t.accept||`image/*`,n.addEventListener(`change`,async()=>{let r=n.files[0];if(!r)return;let i;try{i=await tw(r,t)}catch(e){window.alert(`Upload failed: ${e.message}`);return}e.chain().focus().setImage({src:i.url,alt:i.alt}).run()}),n.click()}function rw(e){return ew.configure({allowedMimeTypes:e.accept?e.accept.split(`,`):void 0,onDrop:async(t,n,r)=>{for(let i of n)try{let n=await tw(i,e);t.chain().focus().insertContentAt(r,{type:`image`,attrs:{src:n.url,alt:n.alt}}).run(),r+=1}catch(e){window.alert(`Upload failed: ${e.message}`)}},onPaste:async(t,n,r)=>{if(!r)for(let r of n)try{let n=await tw(r,e);t.chain().focus().setImage({src:n.url,alt:n.alt}).run()}catch(e){window.alert(`Upload failed: ${e.message}`)}}})}async function iw(e,t){let n=document.createElement(`dialog`);n.className=`dj-tiptap-browser`,document.body.append(n),n.addEventListener(`close`,()=>n.remove());let r=async e=>{n.innerHTML=await(await fetch(e)).text()};n.addEventListener(`click`,async i=>{let a=i.target.closest(`[data-image-url]`),o=i.target.closest(`[data-fetch]`);a?(e.chain().focus().setImage({src:a.dataset.imageUrl,alt:a.dataset.imageAlt}).run(),n.close()):o?await r(t.browseUrl+o.dataset.fetch):(i.target.closest(`[data-close]`)||i.target===n)&&n.close()}),await r(t.browseUrl),n.showModal()}var aw={uploadImage:nw,browseImages:iw,setLink(e){let t=e.getAttributes(`link`).href,n=window.prompt(`URL`,t);if(n!==null){if(n===``){e.chain().focus().extendMarkRange(`link`).unsetLink().run();return}e.chain().focus().extendMarkRange(`link`).setLink({href:n}).run()}},setImage(e){let t=window.prompt(`Image URL`);t&&e.chain().focus().setImage({src:t}).run()}};function ow(e,t,n){let r=[...e.querySelectorAll(`button[data-command]`)],i=e=>e.dataset.args?JSON.parse(e.dataset.args):void 0;for(let e of r){let t=QC[e.dataset.icon];t&&e.replaceChildren(t())}for(let e of r)e.addEventListener(`mousedown`,e=>e.preventDefault()),e.addEventListener(`click`,()=>{let r=e.dataset.command;aw[r]?aw[r](t,n):t.chain().focus()[r](i(e)).run()});let a=()=>{for(let e of r)e.dataset.active&&e.classList.toggle(`is-active`,t.isActive(e.dataset.active,i(e))),e.dataset.enable&&(e.disabled=!t.can()[e.dataset.enable]())};t.on(`transaction`,a),a(),e.hidden=!1}var sw=`<!--more-->`,cw=RegExp(`<div ${hC}="${gC}"[^>]*>.*?</div>`,`g`);function lw(e){return e.replaceAll(sw,`<div ${hC}="${gC}"></div>`)}function uw(e){return e.replace(cw,sw)}var dw=class extends HTMLElement{static formAssociated=!0;#e;#t=null;#n=``;constructor(){super(),this.#e=this.attachInternals()}get editor(){return this.#t}connectedCallback(){this.#t||(document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>this.#r(),{once:!0}):this.#r())}disconnectedCallback(){this.#t?.destroy(),this.#t=null}formResetCallback(){this.#t?.commands.setContent(lw(this.#n)),this.#i()}formDisabledCallback(e){this.#t?.setEditable(!e)}#r(){this.#n=this.textContent.trim(),this.replaceChildren();let e={uploadUrl:this.dataset.uploadUrl,browseUrl:this.dataset.browseUrl,accept:this.dataset.accept,csrfToken:()=>this.closest(`form`)?.querySelector(`input[name="csrfmiddlewaretoken"]`)?.value??``};this.#t=new Bd({element:this,extensions:e.uploadUrl?[...yC,rw(e)]:yC,content:lw(this.#n),onCreate:()=>this.#i(),onUpdate:()=>this.#i()});let t=this.parentElement?.querySelector(`[data-dj-tiptap-toolbar]`);t&&ow(t,this.#t,e)}#i(){this.#e.setFormValue(uw(this.#t.getHTML()))}};customElements.define(`dj-tiptap-editor`,dw);
+</svg>`,$=e=>()=>{let t=document.createElement(`template`);return t.innerHTML=e.trim(),t.content.firstElementChild},tw={undo:$(xC),redo:$(SC),paragraph:$(CC),"heading-1":$(wC),"heading-2":$(TC),"heading-3":$(EC),bold:$(DC),italic:$(OC),strikethrough:$(kC),underline:$(AC),code:$(jC),blockquote:$(MC),"bullet-list":$(NC),"ordered-list":$(PC),"code-block":$(FC),link:$(IC),image:$(LC),"image-upload":$(RC),"image-library":$(zC),video:$(BC),"video-upload":$(VC),"insert-table":$(HC),hr:$(UC),more:$(WC),"hard-break":$(GC),"add-row-before":$(KC),"add-row-after":$(qC),"delete-row":$(JC),"add-col-before":$(YC),"add-col-after":$(XC),"delete-col":$(ZC),"merge-or-split":$(QC),"header-row":$($C),"delete-table":$(ew)},nw=({key:e,editor:t,onPaste:n,onDrop:r,allowedMimeTypes:i})=>new F({key:e||new I(`fileHandler`),props:{handleDrop(e,n){if(!r||n.dataTransfer?.types.includes(`application/x-prosemirror-slice`)||!n.dataTransfer?.files.length)return!1;let a=e.posAtCoords({left:n.clientX,top:n.clientY}),o=Array.from(n.dataTransfer.files);return i&&(o=o.filter(e=>i.includes(e.type))),o.length===0?!1:(n.preventDefault(),n.stopPropagation(),r(t,o,a?.pos||0),!0)},handlePaste(e,r){if(!n||!r.clipboardData?.files.length)return!1;let a=Array.from(r.clipboardData.files),o=r.clipboardData.getData(`text/html`);return i&&(a=a.filter(e=>i.includes(e.type))),!(a.length===0||(r.preventDefault(),r.stopPropagation(),n(t,a,o),o.length>0))}}}),rw=H.create({name:`fileHandler`,addOptions(){return{onPaste:void 0,onDrop:void 0,allowedMimeTypes:void 0}},addProseMirrorPlugins(){return[nw({key:new I(this.name),editor:this.editor,allowedMimeTypes:this.options.allowedMimeTypes,onDrop:this.options.onDrop,onPaste:this.options.onPaste})]}});async function iw(e,t){let n=new FormData;n.append(`file`,e);let r=await fetch(t.uploadUrl,{method:`POST`,headers:{"X-CSRFToken":t.csrfToken()},body:n}),i=await r.json();if(!r.ok)throw Error(i.error);return i}function aw(e,t){t.content_type?.startsWith(`video/`)?e.chain().focus().setVideo({src:t.url,title:t.alt}).run():e.chain().focus().setImage({src:t.url,alt:t.alt}).run()}function ow(e){return e.content_type?.startsWith(`video/`)?{type:`video`,attrs:{src:e.url,title:e.alt}}:{type:`image`,attrs:{src:e.url,alt:e.alt}}}function sw(e,t,n){let r=document.createElement(`input`);r.type=`file`,r.accept=n,r.addEventListener(`change`,async()=>{let n=r.files[0];if(!n)return;let i;try{i=await iw(n,t)}catch(e){window.alert(`Upload failed: ${e.message}`);return}aw(e,i)}),r.click()}function cw(e,t){sw(e,t,t.acceptImage||`image/*`)}function lw(e,t){sw(e,t,t.acceptVideo||`video/*`)}function uw(e){return rw.configure({allowedMimeTypes:e.accept?e.accept.split(`,`):void 0,onDrop:async(t,n,r)=>{for(let i of n)try{let n=await iw(i,e);t.chain().focus().insertContentAt(r,ow(n)).run(),r+=1}catch(e){window.alert(`Upload failed: ${e.message}`)}},onPaste:async(t,n,r)=>{if(!r)for(let r of n)try{aw(t,await iw(r,e))}catch(e){window.alert(`Upload failed: ${e.message}`)}}})}async function dw(e,t){let n=document.createElement(`dialog`);n.className=`dj-tiptap-browser`,document.body.append(n),n.addEventListener(`close`,()=>n.remove());let r=async e=>{n.innerHTML=await(await fetch(e)).text()};n.addEventListener(`click`,async i=>{let a=i.target.closest(`[data-image-url]`),o=i.target.closest(`[data-fetch]`);a?(e.chain().focus().setImage({src:a.dataset.imageUrl,alt:a.dataset.imageAlt}).run(),n.close()):o?await r(t.browseUrl+o.dataset.fetch):(i.target.closest(`[data-close]`)||i.target===n)&&n.close()}),await r(t.browseUrl),n.showModal()}var fw={uploadImage:cw,uploadVideo:lw,browseImages:dw,setLink(e){let t=e.getAttributes(`link`).href,n=window.prompt(`URL`,t);if(n!==null){if(n===``){e.chain().focus().extendMarkRange(`link`).unsetLink().run();return}e.chain().focus().extendMarkRange(`link`).setLink({href:n}).run()}},setImage(e){let t=window.prompt(`Image URL`);t&&e.chain().focus().setImage({src:t}).run()},setVideo(e){let t=window.prompt(`Video URL`);t&&e.chain().focus().setVideo({src:t}).run()}};function pw(e,t,n){let r=[...e.querySelectorAll(`button[data-command]`)],i=e=>e.dataset.args?JSON.parse(e.dataset.args):void 0;for(let e of r){let t=tw[e.dataset.icon];t&&e.replaceChildren(t())}for(let e of r)e.addEventListener(`mousedown`,e=>e.preventDefault()),e.addEventListener(`click`,()=>{let r=e.dataset.command;fw[r]?fw[r](t,n):t.chain().focus()[r](i(e)).run()});let a=()=>{for(let e of r)e.dataset.active&&e.classList.toggle(`is-active`,t.isActive(e.dataset.active,i(e))),e.dataset.enable&&(e.disabled=!t.can()[e.dataset.enable]())};t.on(`transaction`,a),a(),e.hidden=!1}var mw=`<!--more-->`,hw=RegExp(`<div ${hC}="${gC}"[^>]*>.*?</div>`,`g`);function gw(e){return e.replaceAll(mw,`<div ${hC}="${gC}"></div>`)}function _w(e){return e.replace(hw,mw)}var vw=class extends HTMLElement{static formAssociated=!0;#e;#t=null;#n=``;constructor(){super(),this.#e=this.attachInternals()}get editor(){return this.#t}connectedCallback(){this.#t||(document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>this.#r(),{once:!0}):this.#r())}disconnectedCallback(){this.#t?.destroy(),this.#t=null}formResetCallback(){this.#t?.commands.setContent(gw(this.#n)),this.#i()}formDisabledCallback(e){this.#t?.setEditable(!e)}#r(){this.#n=this.textContent.trim(),this.replaceChildren();let e=this.dataset.acceptImage,t=this.dataset.acceptVideo,n={uploadUrl:this.dataset.uploadUrl,browseUrl:this.dataset.browseUrl,acceptImage:e,acceptVideo:t,accept:[e,t].filter(Boolean).join(`,`),csrfToken:()=>this.closest(`form`)?.querySelector(`input[name="csrfmiddlewaretoken"]`)?.value??``};this.#t=new Bd({element:this,extensions:n.uploadUrl?[...bC,uw(n)]:bC,content:gw(this.#n),onCreate:()=>this.#i(),onUpdate:()=>this.#i()});let r=this.parentElement?.querySelector(`[data-dj-tiptap-toolbar]`);r&&pw(r,this.#t,n)}#i(){this.#e.setFormValue(_w(this.#t.getHTML()))}};customElements.define(`dj-tiptap-editor`,vw);

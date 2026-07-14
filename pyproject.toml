@@ -1,6 +1,6 @@
 [project]
 name = "dj-tiptap"
-version = "0.1.6"
+version = "0.1.7"
 description = "Rich text editor for Django based on Tiptap."
 authors = [
     {name = "Stuart Maxwell", email = "stuart@amanzi.nz"},
@@ -17,6 +17,7 @@ dev = [
     "pytest-django~=4.12",
     "pillow~=12.3",
     "pytest-playwright>=0.8.0",
+    "puremagic~=2.2",
 ]
 
 [build-system]

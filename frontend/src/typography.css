@@ -67,7 +67,8 @@
   background: none;
   font-size: 0.875em;
 }
-:is(.tiptap, .post-content) img {
+:is(.tiptap, .post-content) img,
+:is(.tiptap, .post-content) video {
   max-width: 100%;
   height: auto;
 }

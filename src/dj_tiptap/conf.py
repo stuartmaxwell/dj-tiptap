@@ -22,7 +22,22 @@ DEFAULT_ALLOWED_IMAGE_TYPES = {
     "WEBP": "image/webp",
 }
 
+# Mime types accepted by the video upload path, as detected by puremagic in
+# the upload view, stored as Attachment.content_type, and forwarded to the
+# editor JS via the widget's data-accept-video attribute. A set of mime types
+# (not a format->mime dict like images) because puremagic reports mime types
+# directly. Only web-playable formats: video/quicktime et al. would upload
+# fine but not play in most browsers' <video> element. Set to an empty set to
+# disable video uploads entirely.
+DEFAULT_ALLOWED_VIDEO_TYPES = {
+    "video/mp4",
+    "video/webm",
+}
+
 DEFAULT_MAX_UPLOAD_SIZE_MB = 10
+
+# Videos get their own, larger cap: even a short clip dwarfs any photo.
+DEFAULT_MAX_VIDEO_UPLOAD_SIZE_MB = 100
 
 
 def max_upload_size_mb() -> int:
@@ -34,6 +49,16 @@ def max_upload_size_mb() -> int:
     return getattr(settings, "DJ_TIPTAP_MAX_UPLOAD_SIZE_MB", DEFAULT_MAX_UPLOAD_SIZE_MB)
 
 
+def max_video_upload_size_mb() -> int:
+    """Maximum video upload size in megabytes.
+
+    Returns:
+        The maximum video upload size in megabytes, as configured via
+        DJ_TIPTAP_MAX_VIDEO_UPLOAD_SIZE_MB.
+    """
+    return getattr(settings, "DJ_TIPTAP_MAX_VIDEO_UPLOAD_SIZE_MB", DEFAULT_MAX_VIDEO_UPLOAD_SIZE_MB)
+
+
 def allowed_image_types() -> dict[str, str]:
     """Mapping of accepted Pillow image formats to their mime types.
 
@@ -41,6 +66,15 @@ def allowed_image_types() -> dict[str, str]:
         The allowed image types, as configured via DJ_TIPTAP_ALLOWED_IMAGE_TYPES.
     """
     return getattr(settings, "DJ_TIPTAP_ALLOWED_IMAGE_TYPES", DEFAULT_ALLOWED_IMAGE_TYPES)
+
+
+def allowed_video_types() -> set[str]:
+    """Set of accepted video mime types.
+
+    Returns:
+        The allowed video mime types, as configured via DJ_TIPTAP_ALLOWED_VIDEO_TYPES.
+    """
+    return getattr(settings, "DJ_TIPTAP_ALLOWED_VIDEO_TYPES", DEFAULT_ALLOWED_VIDEO_TYPES)
 
 
 def upload_url(override: str | None = None) -> str:

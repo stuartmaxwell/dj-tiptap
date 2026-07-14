@@ -118,6 +118,10 @@ dj-tiptap-editor {
 .tiptap [data-resize-container].ProseMirror-selectednode img {
   outline: 2px solid #4a90d9;
 }
+/* Videos have no resize node view, so the outline goes on the element itself */
+.tiptap video.ProseMirror-selectednode {
+  outline: 2px solid #4a90d9;
+}
 .tiptap [data-resize-handle] {
   width: 0.75rem;
   height: 0.75rem;

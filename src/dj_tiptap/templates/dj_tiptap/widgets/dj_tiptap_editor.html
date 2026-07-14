@@ -32,6 +32,10 @@
       {% if widget.browse_url %}
         <button type="button" data-command="browseImages" data-icon="image-library" aria-label="BrowseImages" title="Insert from media library">🗇</button>
       {% endif %}
+      <button type="button" data-command="setVideo" data-active="video" data-icon="video" aria-label="Video" title="Insert video from URL">▶</button>
+      {% if widget.upload_url and widget.accept_video %}
+        <button type="button" data-command="uploadVideo" data-icon="video-upload" aria-label="UploadVideo" title="Upload video">⤒</button>
+      {% endif %}
       <button type="button" data-command="insertTable" data-args='{"rows": 3, "cols": 3, "withHeaderRow": true}' data-enable="insertTable" data-icon="insert-table" aria-label="InsertTable" title="Insert 3×3 table">⊞</button>
       <button type="button" data-command="setHorizontalRule" data-icon="hr" aria-label="HorizontalRule" title="Horizontal rule">—</button>
       <button type="button" data-command="setHardBreak" data-icon="hard-break" aria-label="HardBreak" title="Hard line break">↵</button>
@@ -53,6 +57,7 @@
     name="{{ widget.name }}"
     data-upload-url="{{ widget.upload_url }}"
     data-browse-url="{{ widget.browse_url }}"
-    data-accept="{{ widget.accept }}"
+    data-accept-image="{{ widget.accept_image }}"
+    data-accept-video="{{ widget.accept_video }}"
   >{% if widget.value %}{{ widget.value }}{% endif %}</dj-tiptap-editor>
 </div>
