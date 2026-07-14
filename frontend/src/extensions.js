@@ -8,6 +8,7 @@ import { TableKit } from "@tiptap/extension-table";
 import { Placeholder } from "@tiptap/extensions";
 import { Typography } from "@tiptap/extension-typography";
 import { More } from "./more.js";
+import { Video } from "./video.js";
 
 // The `common` set is ~37 mainstream languages; `all` (~190) triples the
 // bundle. Individual grammars can also be registered one by one if even
@@ -56,4 +57,6 @@ export const extensions = [
   // DJ Press's "Read more" excerpt marker — see more.js for why this can't
   // just be a raw `<!--more-->` comment inside the schema.
   More,
+  // Self-hosted HTML5 <video> for uploaded clips; see video.js.
+  Video,
 ];

@@ -240,6 +240,90 @@ def test_pasting_an_image_file_uploads_it_and_inserts_it(page):
     expect(img).to_have_attribute("alt", "pasted")
 
 
+def test_video_command_inserts_a_video_from_the_prompted_url(page):
+    src = "/media/somewhere/clip.mp4"
+
+    page.goto("/add/")
+    page.locator("dj-tiptap-editor .tiptap").click()
+
+    # window.prompt() blocks the page; answer it before triggering it
+    page.on("dialog", lambda dialog: dialog.accept(src))
+    page.get_by_role("button", name="Video", exact=True).click()
+
+    video = page.locator(".tiptap video")
+    expect(video).to_have_attribute("src", src)
+    # The stored element must be playable on the public page without JS
+    expect(video).to_have_attribute("controls", "controls")
+
+    assert editor_html(page) == f'<video src="{src}" controls="controls" preload="metadata"></video><p></p>'
+
+
+def test_video_upload_button_uploads_the_chosen_file_and_inserts_a_video_element(page):
+    page.goto("/add/")
+    page.locator("dj-tiptap-editor .tiptap").click()
+
+    # clip.mp4 is a bare ftyp header — enough for the server's magic-byte
+    # check, and the <video> element renders without needing playable media
+    with page.expect_file_chooser() as chooser_info:
+        page.get_by_role("button", name="UploadVideo", exact=True).click()
+    chooser_info.value.set_files(FIXTURES / "clip.mp4")
+
+    video = page.locator(".tiptap video")
+    expect(video).to_have_attribute("src", re.compile(r"/media/attachments/\d{4}/\d{2}/clip.*\.mp4"))
+    # The alt-text fallback (filename stem) lands on title: <video> has no alt
+    expect(video).to_have_attribute("title", "clip")
+
+
+def test_dropping_a_video_file_uploads_it_and_inserts_a_video_element(page):
+    page.goto("/add/")
+
+    surface = page.locator("dj-tiptap-editor .tiptap")
+    box = surface.bounding_box()
+    surface.evaluate(
+        """(el, { b64, x, y }) => {
+            const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(new File([bytes], "dropped.mp4", { type: "video/mp4" }));
+            el.dispatchEvent(
+                new DragEvent("drop", { clientX: x, clientY: y, dataTransfer, bubbles: true, cancelable: true }),
+            );
+        }""",
+        {
+            "b64": base64.b64encode((FIXTURES / "clip.mp4").read_bytes()).decode(),
+            "x": box["x"] + 20,
+            "y": box["y"] + 20,
+        },
+    )
+
+    video = page.locator(".tiptap video")
+    expect(video).to_have_attribute("src", re.compile(r"/media/attachments/\d{4}/\d{2}/dropped.*\.mp4"))
+
+
+def test_videos_survive_the_round_trip_to_the_public_post_page(page):
+    title = f"pw-test video {time.time_ns()}"
+
+    page.goto("/add/")
+    page.fill("input[name=title]", title)
+    page.locator("dj-tiptap-editor .tiptap").click()
+    with page.expect_file_chooser() as chooser_info:
+        page.get_by_role("button", name="UploadVideo", exact=True).click()
+    chooser_info.value.set_files(FIXTURES / "clip.mp4")
+    expect(page.locator(".tiptap video")).to_be_visible()
+    # The freshly inserted node is selected (same as images); typing now
+    # would replace it, so step off it first
+    page.keyboard.press("ArrowRight")
+    page.keyboard.type("Watch this:")
+
+    page.click("input[type=submit]")
+    page.wait_for_url("/")
+    page.click(f"text={title}")
+
+    video = page.locator(".post-content video")
+    expect(video).to_be_visible()
+    expect(video).to_have_attribute("controls", "controls")
+    expect(video).to_have_attribute("src", re.compile(r"/media/attachments/\d{4}/\d{2}/clip.*\.mp4"))
+
+
 def test_dragging_a_corner_handle_resizes_the_image_and_stores_width_height(page):
     page.goto("/add/")
     page.locator("dj-tiptap-editor .tiptap").click()

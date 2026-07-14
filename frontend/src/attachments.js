@@ -1,13 +1,15 @@
-// Image attachments: upload to Django and insert into the editor.
+// Image and video attachments: upload to Django and insert into the editor.
 //
 // Everything here receives the `config` object built by element.js from the
 // widget's data attributes:
-//   config.uploadUrl  — POST endpoint returning {url, alt, ...} JSON
-//   config.browseUrl  — GET endpoint returning the media-library HTML fragment
-//   config.csrfToken  — function returning the current CSRF token
-//   config.accept     — comma-separated mime types the server accepts;
-//                       single source of truth is ALLOWED_IMAGE_TYPES in
-//                       models.py, forwarded by the widget as data-accept
+//   config.uploadUrl    — POST endpoint returning {url, alt, content_type, ...} JSON
+//   config.browseUrl    — GET endpoint returning the media-library HTML fragment
+//   config.csrfToken    — function returning the current CSRF token
+//   config.acceptImage  — comma-separated image mime types the server accepts;
+//                         single source of truth is allowed_image_types in
+//                         conf.py, forwarded by the widget as data-accept-image
+//   config.acceptVideo  — same for videos (allowed_video_types / data-accept-video)
+//   config.accept       — both lists combined, for the drag-drop/paste filter
 
 import { FileHandler } from "@tiptap/extension-file-handler";
 
@@ -22,15 +24,33 @@ async function uploadFile(file, config) {
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.error);
-  return data; // {id, url, alt, width, height}
+  return data; // {id, url, alt, content_type, width, height}
 }
 
-export function uploadImage(editor, config) {
+// The upload response describes what the server stored; insert the matching
+// node. Videos have no alt attribute, so the alt text becomes the title.
+function insertUploaded(editor, data) {
+  if (data.content_type?.startsWith("video/")) {
+    editor.chain().focus().setVideo({ src: data.url, title: data.alt }).run();
+  } else {
+    editor.chain().focus().setImage({ src: data.url, alt: data.alt }).run();
+  }
+}
+
+// One node description per upload response, for insertContentAt (drag-drop
+// needs to insert at the drop position, not the cursor).
+function uploadedNode(data) {
+  return data.content_type?.startsWith("video/")
+    ? { type: "video", attrs: { src: data.url, title: data.alt } }
+    : { type: "image", attrs: { src: data.url, alt: data.alt } };
+}
+
+function uploadViaPicker(editor, config, accept) {
   const input = document.createElement("input");
   input.type = "file";
   // The accept attribute takes the same comma-separated form, so the file
   // picker only offers what the server will actually take
-  input.accept = config.accept || "image/*";
+  input.accept = accept;
 
   input.addEventListener("change", async () => {
     const file = input.files[0];
@@ -44,11 +64,19 @@ export function uploadImage(editor, config) {
       return;
     }
 
-    editor.chain().focus().setImage({ src: data.url, alt: data.alt }).run();
+    insertUploaded(editor, data);
   });
 
   // Never appended to the DOM; garbage-collected once the handler settles.
   input.click();
+}
+
+export function uploadImage(editor, config) {
+  uploadViaPicker(editor, config, config.acceptImage || "image/*");
+}
+
+export function uploadVideo(editor, config) {
+  uploadViaPicker(editor, config, config.acceptVideo || "video/*");
 }
 
 // Tiptap extension that uploads files dropped or pasted into the editor.
@@ -64,15 +92,8 @@ export function createFileHandler(config) {
       for (const file of files) {
         try {
           const data = await uploadFile(file, config);
-          editor
-            .chain()
-            .focus()
-            .insertContentAt(pos, {
-              type: "image",
-              attrs: { src: data.url, alt: data.alt },
-            })
-            .run();
-          pos += 1; // an image node occupies one position; keep drop order
+          editor.chain().focus().insertContentAt(pos, uploadedNode(data)).run();
+          pos += 1; // an atom node occupies one position; keep drop order
         } catch (error) {
           window.alert(`Upload failed: ${error.message}`);
         }
@@ -88,11 +109,7 @@ export function createFileHandler(config) {
       for (const file of files) {
         try {
           const data = await uploadFile(file, config);
-          editor
-            .chain()
-            .focus()
-            .setImage({ src: data.url, alt: data.alt })
-            .run();
+          insertUploaded(editor, data);
         } catch (error) {
           window.alert(`Upload failed: ${error.message}`);
         }

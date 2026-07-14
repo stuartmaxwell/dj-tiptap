@@ -9,10 +9,11 @@
 //   data-icon    — key into the icons registry; button text is replaced with an SVG
 
 import icons from './icons.js'
-import { uploadImage, browseImages } from './attachments.js'
+import { uploadImage, uploadVideo, browseImages } from './attachments.js'
 
 const customCommands = {
   uploadImage,
+  uploadVideo,
   browseImages,
   setLink(editor) {
     // Pre-fill the prompt with the existing URL when editing a link
@@ -40,6 +41,15 @@ const customCommands = {
     }
 
     editor.chain().focus().setImage({ src: url }).run();
+  },
+  setVideo(editor) {
+    const url = window.prompt("Video URL");
+
+    if (!url) {
+      return; // cancelled or empty
+    }
+
+    editor.chain().focus().setVideo({ src: url }).run();
   },
 };
 

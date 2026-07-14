@@ -88,13 +88,20 @@ export default class DjTiptapEditor extends HTMLElement {
     // CSRF token is read from the surrounding form's {% csrf_token %} input
     // (a function, so it's read fresh per request), which works even with
     // CSRF_COOKIE_HTTPONLY.
+    // Comma-separated mime types, e.g. "image/jpeg,image/png" — defined once
+    // in conf.py and forwarded by the widget as data-accept-image /
+    // data-accept-video. Kept separate so each upload button's file picker
+    // only offers its own kind; combined for the drag-drop/paste filter.
+    const acceptImage = this.dataset.acceptImage;
+    const acceptVideo = this.dataset.acceptVideo;
+
     const config = {
       // Note: dataset is the browser's built-in view of data-* attributes: data-upload-url="..." on the element becomes this.dataset.uploadUrl (kebab-case → camelCase is automatic).
       uploadUrl: this.dataset.uploadUrl,
       browseUrl: this.dataset.browseUrl,
-      // Comma-separated mime types, e.g. "image/jpeg,image/png" — defined
-      // once in models.py and forwarded by the widget as data-accept
-      accept: this.dataset.accept,
+      acceptImage,
+      acceptVideo,
+      accept: [acceptImage, acceptVideo].filter(Boolean).join(","),
 
       // Lambda function to read the csrf token fresh each time the upload happens
       csrfToken: () =>

@@ -20,6 +20,8 @@ import link from "@tabler/icons/outline/link.svg?raw";
 import image from "@tabler/icons/outline/photo.svg?raw";
 import imageUpload from "@tabler/icons/outline/photo-up.svg?raw";
 import imageLibrary from "@tabler/icons/outline/library-photo.svg?raw";
+import video from "@tabler/icons/outline/movie.svg?raw";
+import videoUpload from "@tabler/icons/outline/video-plus.svg?raw";
 import table from "@tabler/icons/outline/table.svg?raw";
 import horizontalRule from "@tabler/icons/outline/minus.svg?raw";
 import readMore from "@tabler/icons/outline/page-break.svg?raw";
@@ -60,6 +62,8 @@ export default {
   image: fromSvg(image),
   "image-upload": fromSvg(imageUpload),
   "image-library": fromSvg(imageLibrary),
+  video: fromSvg(video),
+  "video-upload": fromSvg(videoUpload),
   "insert-table": fromSvg(table),
   hr: fromSvg(horizontalRule),
   more: fromSvg(readMore),

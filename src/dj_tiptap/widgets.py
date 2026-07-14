@@ -36,9 +36,12 @@ class DjTiptapWidget(forms.Widget):
         # Resolved at render time, so the URLconf is fully loaded by then
         context["widget"]["upload_url"] = conf.upload_url(self.upload_url)
         context["widget"]["browse_url"] = conf.browse_url(self.browse_url)
-        # Comma-separated mime types for the JS file picker and drag-drop
-        # filter, so the accepted types are defined only in conf.py
-        context["widget"]["accept"] = ",".join(conf.allowed_image_types().values())
+        # Comma-separated mime types for the JS file pickers and drag-drop
+        # filter, so the accepted types are defined only in conf.py. Image and
+        # video lists stay separate so each upload button's file picker only
+        # offers its own kind; the JS combines them for the drag-drop filter.
+        context["widget"]["accept_image"] = ",".join(conf.allowed_image_types().values())
+        context["widget"]["accept_video"] = ",".join(sorted(conf.allowed_video_types()))
         return context
 
     class Media:

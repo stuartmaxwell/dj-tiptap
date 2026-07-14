@@ -17,6 +17,7 @@ dev = [
     "pytest-django~=4.12",
     "pillow~=12.3",
     "pytest-playwright>=0.8.0",
+    "puremagic~=2.2",
 ]
 
 [build-system]
